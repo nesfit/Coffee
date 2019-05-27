@@ -4,27 +4,42 @@ services:
   consul:
     image: consul
     hostname: consul
+    restart: on-failure
     volumes:
       - consul:/consul/data
+    networks:
+      - barista
     environment:
       - CONSUL_LOCAL_CONFIG={"log_level":"warn"}
 
   db:
     hostname: db
     image: mariadb
+    restart: on-failure
+    networks:
+      - barista
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PW}
       - MYSQL_ROOT_HOST=%
 
   adminer:
     image: adminer
+    restart: on-failure
+    networks:
+      - barista
+    depends_on:
+      - db
     ports:
-      - "8080:8080"
+      - "8885:8080"
 
   rabbit:
     image: rabbitmq:3.7-management
     hostname: rabbit
-      - "8081:15672"
+    networks:
+      - barista
+    restart: on-failure
+    ports:
+      - "8886:15672"
     volumes:
       - ./cfg/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins
       - ./cfg/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
@@ -32,9 +47,11 @@ services:
   seq:
     image: datalust/seq:latest
     hostname: seq
+    restart: on-failure
+    networks:
+      - barista
     ports:
-      - "8200:80"
-      - "5341:5341"
+      - "8887:80"
     volumes:
       - seq:/data
     environment:
@@ -43,10 +60,13 @@ services:
   fabio:
     hostname: fabio
     image: magiconair/fabio
+    networks:
+      - barista
     depends_on:
       - consul
       - seq
-      - rabbit    
+      - rabbit  
+    restart: on-failure
     volumes:
       - ./cfg/fabio.properties:/etc/fabio/fabio.properties
 
@@ -57,216 +77,278 @@ services:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Api/Dockerfile
+    networks:
+      - barista
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
-    ports:
-      - "8081:80"
+      - seq
     volumes:
       - ./cfg/api.json:/app/appsettings.json
 
   accounting-service:
     image: ${DOCKER_IMAGE}:accounting
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Accounting/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/accounting.json:/app/appsettings.json
 
+
   accounting-groups-service:
     image: ${DOCKER_IMAGE}:accountinggroups
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.AccountingGroups/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/accountinggroups.json:/app/appsettings.json
 
   consistency-service:
     image: ${DOCKER_IMAGE}:consistency
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Consistency/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/consistency.json:/app/appsettings.json
 
   identity-service:
     image: ${DOCKER_IMAGE}:identity
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Identity/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/identity.json:/app/appsettings.json
   
   mqtt-service:
     image: ${DOCKER_IMAGE}:mqtt
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Mqtt/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/mqtt.json:/app/appsettings.json
 
   offers-service:
     image: ${DOCKER_IMAGE}:offers
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Offers/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/offers.json:/app/appsettings.json
 
   operations-service:
     image: ${DOCKER_IMAGE}:operations
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Operations/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/operations.json:/app/appsettings.json
 
   points-of-sale-service:
     image: ${DOCKER_IMAGE}:pointsofsale
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.PointsOfSale/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/pointsofsale.json:/app/appsettings.json
 
   products-service:
     image: ${DOCKER_IMAGE}:products
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Products/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/products.json:/app/appsettings.json
 
   sale-strategies-service:
     image: ${DOCKER_IMAGE}:salestrategies
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.SaleStrategies/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/salestrategies.json:/app/appsettings.json
 
   stock-items-service:
     image: ${DOCKER_IMAGE}:stockitems
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.StockItems/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/stockitems.json:/app/appsettings.json
 
   stock-operations-service:
     image: ${DOCKER_IMAGE}:stockoperations
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.StockOperations/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/stockoperations.json:/app/appsettings.json
 
   swipe-service:
     image: ${DOCKER_IMAGE}:swipe
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Swipe/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/swipe.json:/app/appsettings.json
 
   users-service:
     image: ${DOCKER_IMAGE}:users
+    networks:
+      - barista
     build:
       args:
         sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Users/Dockerfile
+    restart: on-failure
     depends_on:
       - consul
       - rabbit
       - db
+      - seq
     volumes:
       - ./cfg/users.json:/app/appsettings.json
 
   spa-service:
     image: ${DOCKER_IMAGE}:spa
+    networks:
+      - barista
     build:
       context: ./baristaspa2
       dockerfile: Dockerfile
+    restart: on-failure
     depends_on:
       - api-service
     volumes:
@@ -277,10 +359,12 @@ services:
     build:
       context: ./ExternalEndpoint
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
-      - "7777:80"
+      - "8080:80"
     networks:
       - webproxy
+      - barista
     depends_on:
       - api-service
       - spa-service
@@ -296,6 +380,8 @@ volumes:
     driver: local
 
 networks:
+  barista:
+    driver: bridge
   webproxy:
     external:
       name: webproxy

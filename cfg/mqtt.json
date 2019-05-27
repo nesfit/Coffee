@@ -20,10 +20,10 @@
 		"RabbitMQPassword": "pass",
 		"RabbitMQVhost": "vhost",
 
-		"MqttHost": "host",
+		"MqttHost": "rabbit",
 		"MqttUser": "user",
 		"MqttPass": "pass",
-		"MqttPort": 1883 
+		"MqttPort": 1883
 	},
 	"consul": {
 		"enabled": true,
