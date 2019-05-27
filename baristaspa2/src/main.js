@@ -38,12 +38,6 @@ import AccountingGroupDetails from "@/components/Pages/AccountingGroupDetails.vu
 import AccountingGroupAuthorizedUsers from "@/components/Pages/AccountingGroupAuthorizedUsers.vue"
 import AccountingGroupPointsOfSale from "@/components/Pages/AccountingGroupPointsOfSale.vue"
 
-Vue.prototype.$api = axios.create({
-  baseURL: "http://api.example.com/",
-  responseType: "json",
-  withCredentials: true,
-})
-
 Vue.use(VueRouter)
 Vue.component("Message", Message)
 
@@ -90,10 +84,34 @@ const router = new VueRouter({
     ] }
   ]
 })
-/* eslint-disable no-new */
-new Vue({
+
+function startApp() {
+  /* eslint-disable no-new */
+  new Vue({
     router,
     el: '#app',    
     template: '<App />',
     components: { App }
-})
+  })
+}
+
+var cfgLoader = axios.create({responseType: "json"});
+
+var loadConfiguredBaseUrl = function() {
+  cfgLoader.get("spa_config.json")
+    .then(resp => {
+      var axiosInstance = axios.create({
+        responseType: "json",
+        withCredentials: true,
+        baseURL: resp.data.api_address
+      });
+
+      Vue.prototype.$api = axiosInstance;
+
+      startApp();
+    })
+    .catch(() => setTimeout(loadConfiguredBaseUrl, 1000));
+};
+
+loadConfiguredBaseUrl();
+

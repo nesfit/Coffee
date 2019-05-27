@@ -41,7 +41,6 @@
 
 <script>
 import Login from '@/components/Pages/Login.vue'
-import axios from 'axios'
 
 export default {
   name: "app",
@@ -91,18 +90,7 @@ export default {
   },
   mounted() {
     var c = this;
-    var cfgLoader = axios.create({responseType: "json"});
-
-    var loadConfiguredBaseUrl = function() {
-      cfgLoader.get("spa_config")
-        .then(resp => {
-          c.$api.defaults.baseURL = resp.data.api_address;
-          c.apiReady();
-        })
-        .catch(() => setTimeout(loadConfiguredBaseUrl, 3000));
-    };
-
-    loadConfiguredBaseUrl();
+    c.apiReady();
   }
 }
 </script>
