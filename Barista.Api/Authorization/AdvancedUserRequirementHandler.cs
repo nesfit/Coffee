@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Barista.Api.Models.Users;
@@ -22,7 +23,7 @@ namespace Barista.Api.Authorization
 
         private static bool IsSuccessfulResponse(Task<HttpResponseMessage> antecedentTask)
         {
-            return antecedentTask.IsCompleted && antecedentTask.Result?.IsSuccessStatusCode == true;
+            return antecedentTask.IsCompleted && antecedentTask.Result?.StatusCode == HttpStatusCode.OK;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AdvancedUserRequirement requirement)
