@@ -1,4 +1,5 @@
-FROM coffee:common-latest AS build
+ARG sourceimage=nesatfit/coffee
+FROM ${sourceimage}:common-latest AS build
 WORKDIR /src
 COPY Barista.Common/ Barista.Common/
 COPY Barista.Contracts/ Barista.Contracts/

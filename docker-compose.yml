@@ -53,6 +53,8 @@ services:
   api-service:
     image: ${DOCKER_IMAGE}:api
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Api/Dockerfile
     depends_on:
@@ -67,6 +69,8 @@ services:
   accounting-service:
     image: ${DOCKER_IMAGE}:accounting
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Accounting/Dockerfile
     depends_on:
@@ -79,6 +83,8 @@ services:
   accounting-groups-service:
     image: ${DOCKER_IMAGE}:accountinggroups
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.AccountingGroups/Dockerfile
     depends_on:
@@ -91,6 +97,8 @@ services:
   consistency-service:
     image: ${DOCKER_IMAGE}:consistency
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Consistency/Dockerfile
     depends_on:
@@ -103,6 +111,8 @@ services:
   identity-service:
     image: ${DOCKER_IMAGE}:identity
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Identity/Dockerfile
     depends_on:
@@ -115,6 +125,8 @@ services:
   mqtt-service:
     image: ${DOCKER_IMAGE}:mqtt
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Mqtt/Dockerfile
     depends_on:
@@ -127,6 +139,8 @@ services:
   offers-service:
     image: ${DOCKER_IMAGE}:offers
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Offers/Dockerfile
     depends_on:
@@ -139,6 +153,8 @@ services:
   operations-service:
     image: ${DOCKER_IMAGE}:operations
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Operations/Dockerfile
     depends_on:
@@ -151,6 +167,8 @@ services:
   points-of-sale-service:
     image: ${DOCKER_IMAGE}:pointsofsale
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.PointsOfSale/Dockerfile
     depends_on:
@@ -163,6 +181,8 @@ services:
   products-service:
     image: ${DOCKER_IMAGE}:products
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Products/Dockerfile
     depends_on:
@@ -175,6 +195,8 @@ services:
   sale-strategies-service:
     image: ${DOCKER_IMAGE}:salestrategies
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.SaleStrategies/Dockerfile
     depends_on:
@@ -187,6 +209,8 @@ services:
   stock-items-service:
     image: ${DOCKER_IMAGE}:stockitems
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.StockItems/Dockerfile
     depends_on:
@@ -199,6 +223,8 @@ services:
   stock-operations-service:
     image: ${DOCKER_IMAGE}:stockoperations
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.StockOperations/Dockerfile
     depends_on:
@@ -211,6 +237,8 @@ services:
   swipe-service:
     image: ${DOCKER_IMAGE}:swipe
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Swipe/Dockerfile
     depends_on:
@@ -223,6 +251,8 @@ services:
   users-service:
     image: ${DOCKER_IMAGE}:users
     build:
+      args:
+        sourceimage: ${DOCKER_IMAGE}
       context: .
       dockerfile: Barista.Users/Dockerfile
     depends_on:
