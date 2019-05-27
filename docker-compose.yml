@@ -1,0 +1,271 @@
+version: '3.7'
+
+services:
+  consul:
+    image: consul
+    hostname: consul
+    volumes:
+      - consul:/consul/data
+    environment:
+      - CONSUL_LOCAL_CONFIG={"log_level":"warn"}
+
+  db:
+    hostname: db
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PW}
+      - MYSQL_ROOT_HOST=%
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+
+  rabbit:
+    image: rabbitmq:3.7-management
+    hostname: rabbit
+      - "8081:15672"
+    volumes:
+      - ./cfg/rabbitmq_enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - ./cfg/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  seq:
+    image: datalust/seq:latest
+    hostname: seq
+    ports:
+      - "8200:80"
+      - "5341:5341"
+    volumes:
+      - seq:/data
+    environment:
+      ACCEPT_EULA: Y
+      
+  fabio:
+    hostname: fabio
+    image: magiconair/fabio
+    depends_on:
+      - consul
+      - seq
+      - rabbit    
+    volumes:
+      - ./cfg/fabio.properties:/etc/fabio/fabio.properties
+
+  api-service:
+    image: ${DOCKER_IMAGE}:api
+    build:
+      context: .
+      dockerfile: Barista.Api/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    ports:
+      - "8081:80"
+    volumes:
+      - ./cfg/api.json:/app/appsettings.json
+
+  accounting-service:
+    image: ${DOCKER_IMAGE}:accounting
+    build:
+      context: .
+      dockerfile: Barista.Accounting/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/accounting.json:/app/appsettings.json
+
+  accounting-groups-service:
+    image: ${DOCKER_IMAGE}:accountinggroups
+    build:
+      context: .
+      dockerfile: Barista.AccountingGroups/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/accountinggroups.json:/app/appsettings.json
+
+  consistency-service:
+    image: ${DOCKER_IMAGE}:consistency
+    build:
+      context: .
+      dockerfile: Barista.Consistency/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/consistency.json:/app/appsettings.json
+
+  identity-service:
+    image: ${DOCKER_IMAGE}:identity
+    build:
+      context: .
+      dockerfile: Barista.Identity/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/identity.json:/app/appsettings.json
+  
+  mqtt-service:
+    image: ${DOCKER_IMAGE}:mqtt
+    build:
+      context: .
+      dockerfile: Barista.Mqtt/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/mqtt.json:/app/appsettings.json
+
+  offers-service:
+    image: ${DOCKER_IMAGE}:offers
+    build:
+      context: .
+      dockerfile: Barista.Offers/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/offers.json:/app/appsettings.json
+
+  operations-service:
+    image: ${DOCKER_IMAGE}:operations
+    build:
+      context: .
+      dockerfile: Barista.Operations/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/operations.json:/app/appsettings.json
+
+  points-of-sale-service:
+    image: ${DOCKER_IMAGE}:pointsofsale
+    build:
+      context: .
+      dockerfile: Barista.PointsOfSale/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/pointsofsale.json:/app/appsettings.json
+
+  products-service:
+    image: ${DOCKER_IMAGE}:products
+    build:
+      context: .
+      dockerfile: Barista.Products/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/products.json:/app/appsettings.json
+
+  sale-strategies-service:
+    image: ${DOCKER_IMAGE}:salestrategies
+    build:
+      context: .
+      dockerfile: Barista.SaleStrategies/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/salestrategies.json:/app/appsettings.json
+
+  stock-items-service:
+    image: ${DOCKER_IMAGE}:stockitems
+    build:
+      context: .
+      dockerfile: Barista.StockItems/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/stockitems.json:/app/appsettings.json
+
+  stock-operations-service:
+    image: ${DOCKER_IMAGE}:stockoperations
+    build:
+      context: .
+      dockerfile: Barista.StockOperations/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/stockoperations.json:/app/appsettings.json
+
+  swipe-service:
+    image: ${DOCKER_IMAGE}:swipe
+    build:
+      context: .
+      dockerfile: Barista.Swipe/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/swipe.json:/app/appsettings.json
+
+  users-service:
+    image: ${DOCKER_IMAGE}:users
+    build:
+      context: .
+      dockerfile: Barista.Users/Dockerfile
+    depends_on:
+      - consul
+      - rabbit
+      - db
+    volumes:
+      - ./cfg/users.json:/app/appsettings.json
+
+  spa-service:
+    image: ${DOCKER_IMAGE}:spa
+    build:
+      context: ./baristaspa2
+      dockerfile: Dockerfile
+    depends_on:
+      - api-service
+    volumes:
+      - ./cfg/baristaspa2.env:/app/.env
+
+  external-service:
+    image: ${DOCKER_IMAGE}:external
+    build:
+      context: ./ExternalEndpoint
+      dockerfile: Dockerfile
+    ports:
+      - "7777:80"
+    networks:
+      - webproxy
+    depends_on:
+      - api-service
+      - spa-service
+    volumes:
+      - ./cfg/ExternalEndpoint.nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+  consul:
+    driver: local
+  seq:
+    driver: local
+  rabbit:
+    driver: local
+
+networks:
+  webproxy:
+    external:
+      name: webproxy

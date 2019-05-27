@@ -1,0 +1,1 @@
+﻿Heavily inspired by https://github.com/devmentors/DNC-DShop.Common

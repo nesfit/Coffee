@@ -1,0 +1,45 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DatabaseConnection": "Server=db;User Id=root;Password=barista;Database=barista-operations",
+    "RabbitMQHost": "rabbit",
+    "RabbitMQUser": "user",
+    "RabbitMQPassword": "pass",
+    "RabbitMQVhost": "vhost"
+  },
+  "Kestrel": {
+    "EndPoints": {
+      "Http": {
+        "Url": "http://localhost:80"
+      }
+    }
+  },
+  "consul": {
+    "enabled": true,
+    "url": "http://consul:8500",
+    "service": "operations-service",
+    "address": "operations-service",
+    "port": "80",
+    "pingEnabled": true,
+    "pingEndpoint": "ping",
+    "pingInterval": 30,
+    "removeAfterInterval": 240,
+    "requestRetries": 10,
+    "urlPrefixes": [ "api/operations" ]
+  },
+  "restEase": { "loadBalancer": "fabio" },
+  "fabio": { "url": "http://fabio:9999" },
+  "Seq": {
+    "ServerUrl": "http://seq:5341",
+    "ApiKey": null,
+    "MinimumLevel": "Information",
+    "LevelOverride": {
+      "Microsoft": "Warning"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "Kestrel": {
+    "EndPoints": {
+      "Http": {
+        "Url": "http://localhost:80"
+      }
+    }
+  },
+  "ConnectionStrings": {
+    "RabbitMQHost": "rabbit",
+    "RabbitMQUser": "user",
+    "RabbitMQPassword": "pass",
+    "RabbitMQVhost": "vhost"
+  },
+  "consul": {
+    "enabled": true,
+    "url": "http://consul:8500",
+    "service": "api-service",
+    "address": "api-service",
+    "port": "80",
+    "pingEnabled": true,
+    "pingEndpoint": "ping",
+    "pingInterval": 30,
+    "removeAfterInterval": 240,
+    "requestRetries": 10
+  },
+  "restEase": { "loadBalancer": "fabio" },
+  "fabio": { "url": "http://fabio:9999" },
+  "Jwt:Issuer": "http://localhost:8000/",
+  "Jwt:Audience": "http://localhost:8000/",
+  "Jwt:SigningKey": "HuNEk+VqPNcB7EllKDWf98baJB8Aee+SPioDSgf5K1DLm/uYLqfm2wTwMuoU0ABzfIqtLyLqtNFOVOxo/aUcFg==",
+  "JwtCookieSecure": false,
+  "JwtCookieDomain": "api-service",
+  "CorsOrigins": "https://coffee.nesad.fit.vutbr.cz",
+  "Seq": {
+    "ServerUrl": "http://seq:5341",
+    "ApiKey": null,
+    "MinimumLevel": "Information",
+    "LevelOverride": {
+      "Microsoft": "Warning"
+    }
+  }
+}

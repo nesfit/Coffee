@@ -1,0 +1,51 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "Kestrel": {
+    "EndPoints": {
+      "Http": {
+        "Url": "http://localhost:80"
+      }
+    }
+  },
+  "ConnectionStrings": {
+    "DatabaseConnection": "Server=db;User Id=root;Password=barista;Database=barista-consistency",
+    "RabbitMQHost": "rabbit",
+    "RabbitMQUser": "user",
+    "RabbitMQPassword": "pass",
+    "RabbitMQVhost": "vhost"
+  },
+  "consul": {
+    "enabled": true,
+    "url": "http://consul:8500",
+    "service": "consistency-service",
+    "address": "consistency-service",
+    "port": "80",
+    "pingEnabled": true,
+    "pingEndpoint": "ping",
+    "pingInterval": 30,
+    "removeAfterInterval": 240,
+    "requestRetries": 10
+  },
+  "restEase": { "loadBalancer": "fabio" },
+  "fabio": { "url": "http://fabio:9999" },
+  "Seq": {
+    "ServerUrl": "http://seq:5341",
+    "ApiKey": null,
+    "MinimumLevel": "Information",
+    "LevelOverride": {
+      "Microsoft": "Warning"
+    }
+  },
+  "Consistency": {
+    "ImmediateRepeatedRunInterval": "0:00:00:10",
+    "DelayedRepeatedRunInterval": "0:01:00:00",
+    "ConsistencyTaskLifetime": "7:00:00:00",
+    "UnconfirmedSaleExpirationInterval": "0:00:00:30"
+  }
+}
