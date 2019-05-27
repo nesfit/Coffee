@@ -1,5 +1,3 @@
-import Api from "@/api.js"
-
 var posNames = {};
 var posPromises = {};
 
@@ -19,7 +17,7 @@ var ssNames = {};
 var ssPromises = {};
 
 export default {
-    getPosName: function(posId) {
+    getPosName: function(api, posId) {
         if (posNames[posId] && (new Date).getTime() < posNames[posId].until)
             return new Promise((resolve) => resolve(posNames[posId].name));
 
@@ -27,7 +25,7 @@ export default {
             return new Promise((resolve, fail) => posPromises[posId].then(resolve).catch(fail));
 
         var p = new Promise(
-            (resolve, reject) => Api.get("/pointsOfSale/" + posId)
+            (resolve, reject) => api.get("/pointsOfSale/" + posId)
                 .then(response => {
                     posNames[posId] = { name: response.data.displayName, until: (new Date).getTime() + 30000 };
                     posPromises[posId] = null;
@@ -43,7 +41,7 @@ export default {
         return p;
     },
 
-    getAgName: function(agId) {
+    getAgName: function(api, agId) {
         if (agNames[agId] && (new Date).getTime() < agNames[agId].until)
             return new Promise((resolve) => resolve(agNames[agId].name));
 
@@ -51,7 +49,7 @@ export default {
             return new Promise((resolve, fail) => agPromises[agId].then(resolve).catch(fail));
 
         var p = new Promise(
-            (resolve, reject) => Api.get("/accountingGroups/" + agId)
+            (resolve, reject) => api.get("/accountingGroups/" + agId)
                 .then(response => {
                     agNames[agId] = { name: response.data.displayName, until: (new Date).getTime() + 30000 };
                     agPromises[agId] = null;
@@ -67,7 +65,7 @@ export default {
         return p;
     },
 
-    getProductName: function(prodId) {
+    getProductName: function(api, prodId) {
         if (prodNames[prodId] && (new Date).getTime() < prodNames[prodId].until)
             return new Promise((resolve) => resolve(prodNames[prodId].name));
 
@@ -75,7 +73,7 @@ export default {
             return new Promise((resolve, fail) => prodPromises[prodId].then(resolve).catch(fail));
 
         var p = new Promise(
-            (resolve, reject) => Api.get("/products/" + prodId)
+            (resolve, reject) => api.get("/products/" + prodId)
                 .then(response => {
                     prodNames[prodId] = { name: response.data.displayName, until: (new Date).getTime() + 30000 };
                     prodPromises[prodId] = null;
@@ -91,7 +89,7 @@ export default {
         return p;
     },
 
-    getUserName: function(userId) {
+    getUserName: function(api, userId) {
         if (userNames[userId] && (new Date).getTime() < userNames[userId].until)
             return new Promise((resolve) => resolve(userNames[userId].name));
 
@@ -99,7 +97,7 @@ export default {
             return new Promise((resolve, fail) => userPromises[userId].then(resolve).catch(fail));
 
         var p = new Promise(
-            (resolve, reject) => Api.get("/users/" + userId)
+            (resolve, reject) => api.get("/users/" + userId)
                 .then(response => {
                     userNames[userId] = { name: response.data.fullName, until: (new Date).getTime() + 30000 };
                     userPromises[userId] = null;
@@ -115,7 +113,7 @@ export default {
         return p;
     },
 
-    getStockItemName: function(userId) {
+    getStockItemName: function(api, userId) {
         if (siNames[userId] && (new Date).getTime() < siNames[userId].until)
             return new Promise((resolve) => resolve(siNames[userId].name));
 
@@ -123,7 +121,7 @@ export default {
             return new Promise((resolve, fail) => siPromises[userId].then(resolve).catch(fail));
 
         var p = new Promise(
-            (resolve, reject) => Api.get("/stockItems/" + userId)
+            (resolve, reject) => api.get("/stockItems/" + userId)
                 .then(response => {
                     siNames[userId] = { name: response.data.displayName, until: (new Date).getTime() + 30000 };
                     siPromises[userId] = null;
@@ -139,7 +137,7 @@ export default {
         return p;
     },
 
-    getSsName: function(ssId) {
+    getSsName: function(api, ssId) {
         if (ssNames[ssId] && (new Date).getTime() < ssNames[ssId].until)
             return new Promise((resolve) => resolve(ssNames[ssId].name));
 
@@ -147,7 +145,7 @@ export default {
             return new Promise((resolve, fail) => ssPromises[ssId].then(resolve).catch(fail));
 
         var p = new Promise(
-            (resolve, reject) => Api.get("/saleStrategies/" + ssId)
+            (resolve, reject) => api.get("/saleStrategies/" + ssId)
                 .then(response => {
                     ssNames[ssId] = { name: response.data.displayName, until: (new Date).getTime() + 30000 };
                     ssPromises[ssId] = null;

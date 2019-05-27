@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import TimeAgo from '@/components/Display/TimeAgo.vue'
 import UserApiKeyCreationModal from '@/components/Modals/UserApiKeyCreationModal.vue'

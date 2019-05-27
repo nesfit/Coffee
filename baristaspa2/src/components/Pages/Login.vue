@@ -20,8 +20,6 @@
 
 <script>
 
-import Api from '@/api.js'
-
 export default {
   name: "Login",
   data: function() {
@@ -39,7 +37,7 @@ export default {
 
           c.alert = {"info": "Logging in.."};
 
-          Api.post(
+          c.$api.post(
               "token/login?saveAsCookie=true",
               { "emailAddress": c.emailAddress, "password": c.password }
             )

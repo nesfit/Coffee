@@ -10,12 +10,11 @@
 
 <script>
 
-import Api from '@/api.js'
-import PagedQuery from '@/components/Query/PagedQuery.vue'
+// import PagedQuery from '@/components/Query/PagedQuery.vue'
 
 export default {
   name: 'Home',
-  components: {PagedQuery},
+  // components: {PagedQuery},
   data: function() {
     return {
       userBalanceValue: null,
@@ -27,7 +26,9 @@ export default {
     };
   },
   mounted: function() {
-    Api.get("balance/me")
+    var c = this;
+
+    c.$api.get("balance/me")
       .then(response => {
         this.userBalanceValue = response.data.value;
         this.userBalanceAsOf = response.data.asOf;
@@ -36,6 +37,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

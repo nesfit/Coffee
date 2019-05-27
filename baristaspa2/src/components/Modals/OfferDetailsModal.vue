@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import ProductSelector from "@/components/Selection/ProductSelector.vue";
 import StockItemSelector from "@/components/Selection/StockItemSelector.vue";
 import DateTimeInput from "@/components/DateTimeInput.vue";
@@ -84,7 +83,7 @@ export default {
             var c = this;            
             var offer = this.values.id;
 
-            Api.delete("offers/" + offer)
+            c.$api.delete("offers/" + offer)
                 .then(() => {
                     c.$bvModal.msgBoxOk("Offer deleted");
                     c.$bvModal.hide(c.values.modalId);
@@ -115,7 +114,7 @@ export default {
                 validUntil: c.validUntil
             };
 
-            Api.put("offers/" + offer, formData)
+            c.$api.put("offers/" + offer, formData)
                 .then(() => c.$bvModal.msgBoxOk("Offer updated"))
                 .catch(() => c.$bvModal.msgBoxOk("Offer failed to update"));
         }

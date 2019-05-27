@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import PosName from "@/components/Display/PosName.vue";
 import ProductName from "@/components/Display/ProductName.vue";
 import AgName from "@/components/Display/AgName.vue";
@@ -77,7 +76,7 @@ export default {
             
             var saleId = this.values.id;
 
-            Api.post("sales/" + saleId + "/cancel", { reason: this.cancelReason })
+            c.$api.post("sales/" + saleId + "/cancel", { reason: this.cancelReason })
                 .then(() => c.state = "Cancelled")
                 .catch(() => c.$bvModal.msgBoxOk("Sale cancellation failed"));
         }

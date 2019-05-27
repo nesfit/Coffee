@@ -58,7 +58,6 @@
 
 <script>
 
-import Api from '@/api.js'
 import UserName from '@/components/Display/UserName.vue'
 import UserSelector from '@/components/Selection/UserSelector.vue'
 
@@ -95,7 +94,7 @@ export default {
       c.assignmentDetails = {loading: true};
       c.$bvModal.show("assignmentDetails");
 
-      Api
+      c.$api
         .get("authenticationMeans", { params: { method: "MFRC522SerialNumber", value: c.lookupSerialNo }})
         .then(response => {
           if (response.data.items.length == 1) {
@@ -115,7 +114,7 @@ export default {
     performAssignmentsLookup(meansId) {
       var c = this;
 
-      Api
+      c.$api
         .get("assignmentsToUser", {params: { mustBeValid: true, ofAuthenticationMeans: meansId }})
         .then(response => {
           if (response.data.items.length == 1) {
@@ -134,7 +133,7 @@ export default {
     cancelAssignment() {
       var c = this;
 
-      Api
+      c.$api
         .delete("assignmentsToUser/" + c.assignmentDetails.assignmentId)
         .then(() => {
           c.$bvModal.hide("assignmentDetails");  
@@ -149,13 +148,13 @@ export default {
       evt.preventDefault();
       var c = this;
 
-      Api.get("authenticationMeans/?method=MFRC522SerialNumber&value=" + c.toUserSerialNo)
+      c.$api.get("authenticationMeans/?method=MFRC522SerialNumber&value=" + c.toUserSerialNo)
         .then(resp => {
           if (resp.data.items && resp.data.items.length == 1) {
             c.assignMeansToUser(resp.data.items[0].id, c.toUserId);
           }
           else {
-            Api.post("authenticationMeans", {
+            c.$api.post("authenticationMeans", {
               type: "MFRC522SerialNumber",
               value: c.toUserSerialNo
             }).then(meansResp => {
@@ -168,7 +167,7 @@ export default {
     assignMeansToUser(meansId, userId) {
       var c = this;
 
-      Api.post("assignmentsToUser", { meansId: meansId, userId: userId, isShared: false })
+      c.$api.post("assignmentsToUser", { meansId: meansId, userId: userId, isShared: false })
         .then(() => c.$bvModal.msgBoxOk("Card was assigned successfully"))
         .catch(() => c.$bvModal.msgBoxOk("Card assignment failed"));
     },
@@ -185,7 +184,7 @@ export default {
 
       var failedCount = 0;
       
-      Api.get("users/" + userId + "/assignedMeans/?method=MFRC522SerialNumber&resultsPerPage=50")
+      c.$api.get("users/" + userId + "/assignedMeans/?method=MFRC522SerialNumber&resultsPerPage=50")
         .then(resp => {
           var assignedCards = resp.data.items;
           
@@ -198,12 +197,12 @@ export default {
               for (var i = 0; i < assignedCards.length; i++) {
                 var assignedCard = assignedCards[i];
 
-                Api.get("assignmentsToUser/?ofAuthenticationMeans="+assignedCard.id+"&assignedToUser="+userId)
+                c.$api.get("assignmentsToUser/?ofAuthenticationMeans="+assignedCard.id+"&assignedToUser="+userId)
                   .then(resp => {
                     if (resp.data.items.length == 1) {
                       var ass = resp.data.items[0];
 
-                      Api.delete("assignmentsToUser/" + ass.id)
+                      c.$api.delete("assignmentsToUser/" + ass.id)
                         .then(() => {
                           c.revokedCount++;
                           if ((c.revokedCount + failedCount) == c.revokedTotal)

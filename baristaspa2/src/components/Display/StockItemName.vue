@@ -27,7 +27,7 @@ export default {
         return;
       }
 
-      State.getStockItemName(c.id)
+      State.getStockItemName(c.$api, c.id)
         .then(n => c.name = n)
         .catch(() => c.name = "Unknown");
     }

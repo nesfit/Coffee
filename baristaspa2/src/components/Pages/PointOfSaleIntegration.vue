@@ -22,8 +22,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
 import ProductSelector from '@/components/Selection/ProductSelector.vue'
 
 export default {
@@ -86,7 +84,7 @@ export default {
 
     sendCommandInner(path, args) {
       var c = this;
-      Api.post(path, args)
+      c.$api.post(path, args)
         .then(() => c.$bvModal.msgBoxOk("The API accepted the request to relay the command."))
         .catch(() => c.$bvModal.msgBoxOk("The API rejected to request to relay the command."));
     }
@@ -119,7 +117,7 @@ export default {
   },
   mounted() {
     var c = this;
-    Api.get("pointsOfSale/" + this.$route.params.id).then(response => {
+    c.$api.get("pointsOfSale/" + this.$route.params.id).then(response => {
       c.posId = c.$route.params.id;
       c.posData = response.data;
     });

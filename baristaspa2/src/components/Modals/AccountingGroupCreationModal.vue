@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import SsSelector from '@/components/Selection/SsSelector.vue';
 
 export default {
@@ -42,13 +41,13 @@ export default {
                 saleStrategyId: c.saleStrategyId || null
             };
 
-            Api.post("accountingGroups", formData)
+            c.$api.post("accountingGroups", formData)
                 .then(response => {
                     var operationId = response.headers["x-operation"];
                     var posId = response.data.id;
 
                     var checkIfExistsPeriodically = function() {
-                        Api.get("operations/" + operationId)
+                        c.$api.get("operations/" + operationId)
                             .then(resp => {
                                 if (resp.isFaulted) {
                                     c.$bvModal.msgBoxOk("Accounting group creation transaction failed");

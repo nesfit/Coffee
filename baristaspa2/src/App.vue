@@ -41,6 +41,7 @@
 
 <script>
 import Login from '@/components/Pages/Login.vue'
+import axios from 'axios'
 
 export default {
   name: "app",
@@ -70,24 +71,38 @@ export default {
     loadPolicies: function(policyArray) {
       for (var i = 0; i < policyArray.length; i++)
         this.$set(this.policies, policyArray[i], true);
+    },
+
+    apiReady: function() {
+      var c = this;
+
+      c.$api.showError = function(error) {
+        c.$bvModal.msgBoxOk("Error communicating with API: " + error.toString())
+      };
+
+      c.$api.get("policies/me")
+        .then(function(response) {
+          c.loadPolicies(response.data);
+          c.shouldShowLoginScreen = false;
+        })
+        .catch(() => c.shouldShowLoginScreen = true)
+        .then(() => c.loading = false);
     }
   },
   mounted() {
     var c = this;
-    
-    c.$api.showError = function(error) {
-      c.$bvModal.msgBoxOk("Error communicating with API: " + error.toString())
+    var cfgLoader = axios.create({responseType: "json"});
+
+    var loadConfiguredBaseUrl = function() {
+      cfgLoader.get("spa_config")
+        .then(resp => {
+          c.$api.defaults.baseURL = resp.data.api_address;
+          c.apiReady();
+        })
+        .catch(() => setTimeout(loadConfiguredBaseUrl, 3000));
     };
 
-    c.$api.get("policies/me")
-      .then(function(response) {
-        c.loadPolicies(response.data);
-        c.shouldShowLoginScreen = false;
-      })
-      .catch(err => {
-        c.shouldShowLoginScreen = true;
-      })
-      .then(() => c.loading = false);
+    loadConfiguredBaseUrl();
   }
 }
 </script>

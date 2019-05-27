@@ -3,8 +3,6 @@
 </template>
 
 <script>
-import Api from '@/api.js'
-
 export default {
   name: 'StockItemBalance',
   data: () => {
@@ -27,7 +25,7 @@ export default {
         return;
       }
 
-      Api.get("stockOperations/balance/" + c.id)
+      c.$api.get("stockOperations/balance/" + c.id)
         .then(bal => c.balance = bal.data)
     }
   },

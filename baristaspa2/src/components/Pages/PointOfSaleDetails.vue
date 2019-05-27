@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import AgSelector from '@/components/Selection/AgSelector.vue';
 import SsSelector from '@/components/Selection/SsSelector.vue';
 
@@ -49,7 +48,7 @@ export default {
         this.posId = this.$route.params.id;
         var c = this;
 
-        Api.get("pointsOfSale/" + this.posId).then(resp => {
+        c.$api.get("pointsOfSale/" + this.posId).then(resp => {
             c.displayName = resp.data.displayName;
             c.accountingGroupId = resp.data.parentAccountingGroupId;
             c.saleStrategyId = resp.data.saleStrategyId;
@@ -69,7 +68,7 @@ export default {
                 features: c.features.length == 0 ? [] : c.features.split(',')
             };
 
-            Api.put("pointsOfSale/" + c.posId, formData)
+            c.$api.put("pointsOfSale/" + c.posId, formData)
                 .then(() => {
                     c.isSaving = false;
                     c.$eventHub.$emit('pos-renamed', c.posId, c.displayName);
@@ -87,7 +86,7 @@ export default {
             this.$bvModal.msgBoxConfirm("Are you sure you want to delete this point of sale?")
                 .then(val => {
                     if (!val) return;
-                    Api.delete("pointsOfSale/" + this.posId)
+                    c.$api.delete("pointsOfSale/" + this.posId)
                     .then(() => {
                         c.$bvModal.msgBoxOk("Point of sale deleted.")
                         .then(() => c.$router.push('/pointsOfSale'));

@@ -27,7 +27,7 @@ export default {
         return;
       }
 
-      State.getProductName(c.id)
+      State.getProductName(c.$api, c.id)
         .then(n => c.name = n)
         .catch(() => c.name = "Unknown");
     }

@@ -23,9 +23,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
-
 export default {
   name: "PasswordChange",
   data: function() {
@@ -61,7 +58,7 @@ export default {
               return;
           }
 
-          Api.post(
+          c.$api.post(
               "users/me/changePassword",
               { newPassword: c.newPassword, newPasswordAgain: c.newPasswordAgain, oldPassword: c.oldPassword }
             )

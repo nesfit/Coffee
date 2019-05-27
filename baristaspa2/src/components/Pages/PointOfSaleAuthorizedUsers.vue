@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import Api from '@/api.js'
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import UserName from '@/components/Display/UserName.vue'
 import PosAuthorizedUserCreationModal from '@/components/Modals/PosAuthorizedUserCreationModal.vue'
@@ -31,7 +30,7 @@ export default {
     showDetails(userId) {
       var c = this;
 
-      Api.get("pointsOfSale/"+this.posId+"/authorizedUsers/"+userId)
+      c.$api.get("pointsOfSale/"+this.posId+"/authorizedUsers/"+userId)
         .then(resp => {
           c.selectedAuthorization = resp.data;
           c.$bvModal.show("posAuthUserDetails");

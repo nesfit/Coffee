@@ -18,8 +18,6 @@
 
 <script>
 
-import Api from '@/api.js'
-
 export default {
     name: 'AccountingGroup',
     data: function() {
@@ -38,7 +36,7 @@ export default {
         loadAg() {
             var c = this;
 
-            Api.get("accountingGroups/" + this.agId).then(response => {
+            c.$api.get("accountingGroups/" + this.agId).then(response => {
                 c.agData = response.data;
             });
         },

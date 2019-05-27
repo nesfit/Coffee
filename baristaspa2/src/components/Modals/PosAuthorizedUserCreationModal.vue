@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import UserSelector from "@/components/Selection/UserSelector.vue";
 
 export default {
@@ -43,7 +42,7 @@ export default {
             evt.preventDefault();
             var c = this;
 
-            Api.post("pointsOfSale/" + c.posId + "/authorizedUsers/" + c.userId, { level: c.level })
+            c.$api.post("pointsOfSale/" + c.posId + "/authorizedUsers/" + c.userId, { level: c.level })
                 .then(() => {
                     c.$emit("user-authorized", c.userId);
                     c.$bvModal.hide(c.modalId);

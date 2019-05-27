@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import UserName from "@/components/Display/UserName.vue";
 
 export default {
@@ -51,7 +50,7 @@ export default {
             evt.preventDefault();
             var c = this;
 
-            Api.put("accountingGroups/" + c.agId + "/authorizedUsers/" + c.userId, c.form)
+            c.$api.put("accountingGroups/" + c.agId + "/authorizedUsers/" + c.userId, c.form)
                 .then(() => c.$bvModal.msgBoxOk("User authorization updated"))
                 .catch(() => c.$bvModal.msgBoxOk("User authorization failed"));
         },
@@ -60,7 +59,7 @@ export default {
             evt.preventDefault();
             var c = this;
 
-            Api.delete("accountingGroups/" + c.agId + "/authorizedUsers/" + c.userId)
+            c.$api.delete("accountingGroups/" + c.agId + "/authorizedUsers/" + c.userId)
                 .then(() => {
                     c.$bvModal.msgBoxOk("User authorization revoked");
                     c.$bvModal.hide(this.modalId);

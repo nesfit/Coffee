@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import UserSelector from "@/components/Selection/UserSelector.vue";
 
 export default {
@@ -86,7 +85,7 @@ export default {
             var c = this;            
             var payment = this.values.id;
 
-            Api.delete("payments/" + payment)
+            c.$api.delete("payments/" + payment)
                 .then(() => {
                     c.$bvModal.msgBoxOk("Payment deleted");
                     c.$bvModal.hide(c.values.modalId);
@@ -99,7 +98,7 @@ export default {
             var c = this;
             var payment = this.values.id;
 
-            Api.put("payments/" + payment, { amount: c.amount, userId: c.userId, source: c.source, externalId: c.externalId })
+            c.$api.put("payments/" + payment, { amount: c.amount, userId: c.userId, source: c.source, externalId: c.externalId })
                 .then(() => c.$bvModal.msgBoxOk("Payment updated"))
                 .catch(() => c.$bvModal.msgBoxOk("Payment failed to update"));
         }

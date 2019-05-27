@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import StockItemSelector from '@/components/Selection/StockItemSelector.vue';
 
 export default {
@@ -54,7 +53,7 @@ export default {
             evt.preventDefault();
             var c = this;            
            
-            Api.post("manualStockOperations", {comment:c.comment,stockItemId:c.stockItemId,quantity:c.quantity})
+            c.$api.post("manualStockOperations", {comment:c.comment,stockItemId:c.stockItemId,quantity:c.quantity})
                 .then(resp => {
                     c.$emit("stock-operation-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);

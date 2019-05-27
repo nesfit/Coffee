@@ -56,7 +56,7 @@ export default {
             else {
                 this.selectedName = "Loading..";
                 var c = this;
-                State.getSsName(c.value)
+                State.getSsName(c.$api, c.value)
                     .then(n => c.selectedName = n)
                     .catch(() => c.selectedName = "Unknown");
             }

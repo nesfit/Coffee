@@ -29,8 +29,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import StockItemName from '@/components/Display/StockItemName.vue'
 import UserName from '@/components/Display/UserName.vue'
@@ -55,7 +53,7 @@ export default {
 
       var c = this;
 
-      Api.get("stockItems/atPointOfSale/" + c.posId + "/?ResultsPerPage=100")
+      c.$api.get("stockItems/atPointOfSale/" + c.posId + "/?ResultsPerPage=100")
         .then(resp => {
           c.stockItemIds = [];
           for (var i = 0; i < resp.data.items.length; i++)
@@ -71,7 +69,7 @@ export default {
       this.$bvModal.msgBoxConfirm("Are you sure you want to remove this sale-based stock operation?")
         .then(val => {
           if (!val) return;
-          Api.delete("saleBasedStockOperations/" + item.id)
+          c.$api.delete("saleBasedStockOperations/" + item.id)
             .then(() => c.$bvModal.msgBoxOk("Sale-based stock operation removed."))
             .catch(() => c.$bvModal.msgBoxOk("Sale-based stock operation failed to remove."))
         });
@@ -83,7 +81,7 @@ export default {
       this.$bvModal.msgBoxConfirm("Are you sure you want to remove this manual stock operation?")
         .then(val => {
           if (!val) return;
-          Api.delete("manualStockOperations/" + item.id)
+          c.$api.delete("manualStockOperations/" + item.id)
             .then(() => c.$bvModal.msgBoxOk("Manual stock operation removed."))
             .catch(() => c.$bvModal.msgBoxOk("Manual stock operation failed to remove."))
         });

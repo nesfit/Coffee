@@ -13,7 +13,6 @@
 </template>
 
 <script>
-
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import ProductCreationModal from '@/components/Modals/ProductCreationModal.vue'
 

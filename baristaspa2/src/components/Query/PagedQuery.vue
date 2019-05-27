@@ -33,9 +33,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
-
 export default {
   name: "PagedQuery",
   props: {
@@ -106,7 +103,7 @@ export default {
             }
         }
 
-        Api.get(c.endpoint, { params: queryParams })
+        c.$api.get(c.endpoint, { params: queryParams })
             .then(response => {
                 c.items = response.data.items;
                 c.pageCount = response.data.totalPages;

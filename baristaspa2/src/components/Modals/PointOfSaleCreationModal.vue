@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import AgSelector from '@/components/Selection/AgSelector.vue';
 import SsSelector from '@/components/Selection/SsSelector.vue';
 
@@ -60,13 +59,13 @@ export default {
                 features: c.features.length == 0 ? [] : c.features.split(',')
             };
 
-            Api.post("pointsOfSale", formData)
+            c.$api.post("pointsOfSale", formData)
                 .then(response => {
                     var operationId = response.headers["x-operation"];
                     var posId = response.data.id;
 
                     var checkIfExistsPeriodically = function() {
-                        Api.get("operations/" + operationId)
+                        c.$api.get("operations/" + operationId)
                             .then(resp => {
                                 if (resp.isFaulted) {
                                     c.$bvModal.msgBoxOk("Point of sale creation transaction failed");

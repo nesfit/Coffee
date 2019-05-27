@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import ProductSelector from "@/components/Selection/ProductSelector.vue";
 import StockItemSelector from "@/components/Selection/StockItemSelector.vue";
 
@@ -105,7 +104,7 @@ export default {
                 validUntil: c.validUntil
             };
 
-            Api.post("offers", formData)
+            c.$api.post("offers", formData)
                 .then(resp => {
                     c.$emit("offer-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);

@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
-
 export default {
     name: 'StockItemCreationModal',
     props: {
@@ -47,7 +45,7 @@ export default {
             evt.preventDefault();
             var c = this;            
            
-            Api.post("stockItems", c.form)
+            c.$api.post("stockItems", c.form)
                 .then(resp => {
                     c.$emit("stock-item-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);

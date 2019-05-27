@@ -16,9 +16,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
-
 export default {
     name: 'User',
     data: function() {
@@ -31,7 +28,7 @@ export default {
         loadUser() {
             var c = this;
 
-            Api.get("users/" + this.userId).then(response => {
+            c.$api.get("users/" + this.userId).then(response => {
                 c.userData = response.data;
             });
         },

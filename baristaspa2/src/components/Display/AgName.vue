@@ -27,7 +27,7 @@ export default {
         return;
       }
 
-      State.getAgName(c.id)
+      State.getAgName(c.$api, c.id)
         .then(n => c.name = n)
         .catch(() => c.name = "Unknown");
     }

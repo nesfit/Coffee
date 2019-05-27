@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import UserCreationModal from '@/components/Modals/UserCreationModal.vue'
 

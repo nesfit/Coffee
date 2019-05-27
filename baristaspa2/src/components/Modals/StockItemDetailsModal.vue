@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
-
 export default {
     name: 'StockItemDetailsModal',
     props: {
@@ -58,7 +56,7 @@ export default {
             var c = this;            
             var stockItem = this.values.id;
 
-            Api.delete("stockItems/" + stockItem)
+            c.$api.delete("stockItems/" + stockItem)
                 .then(() => {
                     c.$bvModal.msgBoxOk("Stock item deleted");
                     c.$bvModal.hide(c.values.modalId);
@@ -71,7 +69,7 @@ export default {
             var c = this;
             var stockItem = this.values.id;
 
-            Api.put("stockItems/" + stockItem, c.form)
+            c.$api.put("stockItems/" + stockItem, c.form)
                 .then(() => c.$bvModal.msgBoxOk("Stock item updated"))
                 .catch(() => c.$bvModal.msgBoxOk("Stock item failed to update"));
         }

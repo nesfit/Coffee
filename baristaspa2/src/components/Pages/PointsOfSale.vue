@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import PointOfSaleCreationModal from '@/components/Modals/PointOfSaleCreationModal.vue'
 import TextFilter from '@/components/Query/TextFilter.vue'

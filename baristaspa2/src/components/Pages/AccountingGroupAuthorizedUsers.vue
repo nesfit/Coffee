@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import Api from '@/api.js'
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import UserName from '@/components/Display/UserName.vue'
 import AgAuthorizedUserCreationModal from '@/components/Modals/AgAuthorizedUserCreationModal.vue'
@@ -31,7 +30,7 @@ export default {
     showDetails(userId) {
       var c = this;
 
-      Api.get("accountingGroups/"+this.agId+"/authorizedUsers/"+userId)
+      c.$api.get("accountingGroups/"+this.agId+"/authorizedUsers/"+userId)
         .then(resp => {
           c.selectedAuthorization = resp.data;
           c.$bvModal.show("agAuthUserDetails");

@@ -36,7 +36,6 @@ import PosName from '@/components/Display/PosName.vue'
 import ProductName from '@/components/Display/ProductName.vue'
 import UserName from '@/components/Display/UserName.vue'
 import SaleDetailsModal from '@/components/Modals/SaleDetailsModal.vue'
-import Api from "@/api.js"
 
 export default {
   name: 'Sales',
@@ -51,7 +50,7 @@ export default {
     showSaleDetails(saleId) {
       var c = this;
 
-      Api.get("sales/" + saleId)
+      c.$api.get("sales/" + saleId)
         .then(resp => {
           c.selectedSale = resp.data;
           c.$bvModal.show("saleDetails");

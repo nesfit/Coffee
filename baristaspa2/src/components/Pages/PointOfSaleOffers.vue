@@ -29,8 +29,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import ProductName from '@/components/Display/ProductName.vue'
 import StockItemName from '@/components/Display/StockItemName.vue'
@@ -48,7 +46,7 @@ export default {
       showOfferDetails(offerId) {
           var c = this;
 
-          Api.get("offers/"+offerId)
+          c.$api.get("offers/"+offerId)
             .then(resp => {
                 c.selectedOffer = resp.data;
                 c.$bvModal.show("posOfferDetail");

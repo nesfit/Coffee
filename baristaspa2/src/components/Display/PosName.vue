@@ -27,7 +27,7 @@ export default {
         return;
       }
 
-      State.getPosName(c.id)
+      State.getPosName(c.$api, c.id)
         .then(n => c.name = n)
         .catch(() => c.name = "Unknown");
     }

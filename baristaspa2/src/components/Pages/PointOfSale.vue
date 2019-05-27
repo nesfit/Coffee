@@ -22,9 +22,6 @@
 </template>
 
 <script>
-
-import Api from '@/api.js'
-
 export default {
     name: 'PointOfSale',
     data: function() {
@@ -37,7 +34,7 @@ export default {
         loadPointOfSale() {
             var c = this;
 
-            Api.get("pointsOfSale/" + this.posId).then(response => {
+            c.$api.get("pointsOfSale/" + this.posId).then(response => {
                 c.posData = response.data;
             });
         },

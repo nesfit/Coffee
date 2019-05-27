@@ -4,6 +4,7 @@ import '@babel/polyfill'
 import 'mutationobserver-shim'
 import VueRouter from 'vue-router'
 import './plugins/bootstrap-vue'
+import axios from 'axios'
 
 import Home from '@/components/Pages/Home.vue'
 import Users from '@/components/Pages/Users.vue'
@@ -37,8 +38,11 @@ import AccountingGroupDetails from "@/components/Pages/AccountingGroupDetails.vu
 import AccountingGroupAuthorizedUsers from "@/components/Pages/AccountingGroupAuthorizedUsers.vue"
 import AccountingGroupPointsOfSale from "@/components/Pages/AccountingGroupPointsOfSale.vue"
 
-import Api from "@/api.js";
-Vue.prototype.$api = Api;
+Vue.prototype.$api = axios.create({
+  baseURL: "http://api.example.com/",
+  responseType: "json",
+  withCredentials: true,
+})
 
 Vue.use(VueRouter)
 Vue.component("Message", Message)

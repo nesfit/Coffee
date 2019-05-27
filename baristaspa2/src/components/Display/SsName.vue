@@ -27,7 +27,7 @@ export default {
         return;
       }
 
-      State.getSsName(c.id)
+      State.getSsName(c.$api, c.id)
         .then(n => c.name = n)
         .catch(() => c.name = "Unknown");
     }

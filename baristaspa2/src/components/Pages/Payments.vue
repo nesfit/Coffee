@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import Api from '@/api.js'
 import PagedQuery from '@/components/Query/PagedQuery.vue'
 import UserName from '@/components/Display/UserName.vue'
 import PaymentDetailsModal from "@/components/Modals/PaymentDetailsModal.vue"
@@ -41,7 +40,7 @@ export default {
     showPaymentDetails(paymentId) {
       var c = this;
 
-      Api.get("payments/" + paymentId)
+      c.$api.get("payments/" + paymentId)
         .then(resp => {
           c.selectedPayment = resp.data;
           c.$bvModal.show("paymentDetails");

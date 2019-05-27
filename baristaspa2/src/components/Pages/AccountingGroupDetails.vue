@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import Api from '@/api.js';
 import SsSelector from '@/components/Selection/SsSelector.vue';
 
 export default {
@@ -32,7 +31,7 @@ export default {
         this.agId = this.$route.params.id;
         var c = this;
 
-        Api.get("accountingGroups/"+this.agId).then(resp => {
+        c.$api.get("accountingGroups/"+this.agId).then(resp => {
             c.displayName = resp.data.displayName;
             c.saleStrategyId = resp.data.saleStrategyId;
         });
@@ -49,7 +48,7 @@ export default {
 
             c.isSaving = true;
 
-            Api.put("accountingGroups/" + c.agId, formData)
+            c.$api.put("accountingGroups/" + c.agId, formData)
                 .then(() => {
                     c.isSaving = false;
                     this.$eventHub.$emit('ag-renamed', c.agId, c.displayName);
@@ -64,7 +63,7 @@ export default {
              this.$bvModal.msgBoxConfirm("Are you sure you want to delete this accounting group?")
                 .then(val => {
                     if (!val) return;
-                    Api.delete("accountingGroups/" + this.agId)
+                    c.$api.delete("accountingGroups/" + this.agId)
                     .then(() => {
                         c.$bvModal.msgBoxOk("Accounting group deleted.").
                         then(() => c.$router.push('/pointsOfSale'));
