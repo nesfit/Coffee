@@ -6,13 +6,6 @@
 
 		}
 	},
-	"Kestrel": {
-		"EndPoints": {
-			"Http": {
-				"Url": "http://localhost:80"
-			}
-		}
-	},
 	"AllowedHosts": "*",
 	"ConnectionStrings": {
 		"RabbitMQHost": "rabbit",

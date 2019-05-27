@@ -6,13 +6,6 @@
       "Microsoft": "Information"
     }
   },
-  "Kestrel": {
-    "EndPoints": {
-      "Http": {
-        "Url": "http://localhost:80"
-      }
-    }
-  },
   "ConnectionStrings": {
     "DatabaseConnection": "Server=db;User Id=root;Password=barista;Database=barista-accountinggroups",
     "RabbitMQHost": "rabbit",

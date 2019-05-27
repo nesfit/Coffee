@@ -3,14 +3,16 @@ using System;
 using Barista.Consistency.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Barista.Consistency.Migrations
 {
     [DbContext(typeof(ConsistencyDbContext))]
-    partial class ConsistencyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190527134940_AdminAccountCreationEvent")]
+    partial class AdminAccountCreationEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

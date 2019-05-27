@@ -1,5 +1,10 @@
-﻿using Barista.Consistency.Domain;
+﻿using System;
+using Barista.Consistency.Domain;
+using Barista.Consistency.Events;
+using Barista.Contracts.Events.Consistency;
+using Barista.Contracts.Events.Sale;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Barista.Consistency.Repositories
 {
@@ -21,6 +26,17 @@ namespace Barista.Consistency.Repositories
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ScheduledEvent>().HasIndex(msg => msg.ScheduledFor);
+            modelBuilder.Entity<ScheduledEvent>().HasData(InitializationEventFactory());
+        }
+
+        protected static ScheduledEvent InitializationEventFactory()
+        {
+            return new ScheduledEvent(
+                Guid.NewGuid(),
+                typeof(IDatabaseCreated).AssemblyQualifiedName,
+                "{}",
+                DateTimeOffset.UtcNow
+            );
         }
     }
 }

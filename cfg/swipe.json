@@ -11,13 +11,6 @@
     "RabbitMQPassword": "pass",
     "RabbitMQVhost": "vhost"
   },
-  "Kestrel": {
-    "EndPoints": {
-      "Http": {
-        "Url": "http://localhost:80"
-      }
-    }
-  },
   "consul": {
     "enabled": true,
     "url": "http://consul:8500",

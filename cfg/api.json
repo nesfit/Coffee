@@ -1,16 +1,7 @@
 {
   "Logging": {
     "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
-    }
-  },
-  "Kestrel": {
-    "EndPoints": {
-      "Http": {
-        "Url": "http://localhost:80"
-      }
+      "Default": "Warning"
     }
   },
   "ConnectionStrings": {
@@ -37,7 +28,7 @@
   "Jwt:Audience": "http://localhost:8000/",
   "Jwt:SigningKey": "HuNEk+VqPNcB7EllKDWf98baJB8Aee+SPioDSgf5K1DLm/uYLqfm2wTwMuoU0ABzfIqtLyLqtNFOVOxo/aUcFg==",
   "JwtCookieSecure": false,
-  "JwtCookieDomain": "http://localhost:8080/",
+  "JwtCookieDomain": "coffee.nesad.fit.vutbr.cz",
   "CorsOrigins": "https://coffee.nesad.fit.vutbr.cz",
   "Seq": {
     "ServerUrl": "http://seq:5341",

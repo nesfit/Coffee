@@ -9,6 +9,8 @@ services:
       - consul:/consul/data
     networks:
       - barista
+    ports:
+      - "8500:8500" #DEV
     environment:
       - CONSUL_LOCAL_CONFIG={"log_level":"warn"}
 
@@ -70,6 +72,36 @@ services:
     volumes:
       - ./cfg/fabio.properties:/etc/fabio/fabio.properties
 
+  spa-service:
+    image: ${DOCKER_IMAGE}:spa
+    networks:
+      - barista
+    build:
+      context: ./baristaspa2
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on: #DEV
+       - api-service 
+    volumes:
+      - ./cfg/baristaspa2.env:/app/.env
+
+  external-service:
+    image: ${DOCKER_IMAGE}:external
+    build:
+      context: ./ExternalEndpoint
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "8080:80"
+    networks:
+      - webproxy
+      - barista
+    depends_on:
+      - api-service
+      - spa-service
+    volumes:
+      - ./cfg/ExternalEndpoint.nginx.conf:/etc/nginx/nginx.conf
+
   api-service:
     image: ${DOCKER_IMAGE}:api
     build:
@@ -85,6 +117,7 @@ services:
       - rabbit
       - db
       - seq
+      - fabio
     volumes:
       - ./cfg/api.json:/app/appsettings.json
 
@@ -105,7 +138,6 @@ services:
       - seq
     volumes:
       - ./cfg/accounting.json:/app/appsettings.json
-
 
   accounting-groups-service:
     image: ${DOCKER_IMAGE}:accountinggroups
@@ -340,36 +372,6 @@ services:
       - seq
     volumes:
       - ./cfg/users.json:/app/appsettings.json
-
-  spa-service:
-    image: ${DOCKER_IMAGE}:spa
-    networks:
-      - barista
-    build:
-      context: ./baristaspa2
-      dockerfile: Dockerfile
-    restart: on-failure
-    depends_on:
-      - api-service
-    volumes:
-      - ./cfg/baristaspa2.env:/app/.env
-
-  external-service:
-    image: ${DOCKER_IMAGE}:external
-    build:
-      context: ./ExternalEndpoint
-      dockerfile: Dockerfile
-    restart: on-failure
-    ports:
-      - "8080:80"
-    networks:
-      - webproxy
-      - barista
-    depends_on:
-      - api-service
-      - spa-service
-    volumes:
-      - ./cfg/ExternalEndpoint.nginx.conf:/etc/nginx/nginx.conf
 
 volumes:
   consul:

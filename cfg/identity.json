@@ -12,13 +12,6 @@
     "RabbitMQPassword": "pass",
     "RabbitMQVhost": "vhost"
   },
-  "Kestrel": {
-    "EndPoints": {
-      "Http": {
-        "Url": "http://localhost:80"
-      }
-    }
-  },
   "consul": {
     "enabled": true,
     "url": "http://consul:8500",
@@ -32,9 +25,9 @@
     "requestRetries": 3
   },
   "restEase": { "loadBalancer": "fabio" },
-  "fabio": { "url": "http://localhost:9999" },
+  "fabio": { "url": "http://fabio:9999" },
   "Seq": {
-    "ServerUrl": "http://localhost:5341",
+    "ServerUrl": "http://seq:5341",
     "ApiKey": null,
     "MinimumLevel": "Information",
     "LevelOverride": {
