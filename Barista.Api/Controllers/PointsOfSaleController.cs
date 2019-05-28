@@ -48,20 +48,24 @@ namespace Barista.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IPagedResult<PointOfSale>>> BrowsePointsOfSale([FromQuery] BrowsePointsOfSale query) =>
             Collection(await _pointsOfSaleService.BrowsePointsOfSale(query));
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(404)]
         public async Task<ActionResult<PointOfSale>> GetPointOfSale(Guid id) =>
             Single(await _pointsOfSaleService.GetPointOfSale(id));
 
+        [Authorize]
         [HttpGet("{id}/authorizedUsers")]
         [ProducesResponseType(200, Type = typeof(IPagedResult<PointOfSaleAuthorizedUser>))]
         [ProducesResponseType(404)]
         public async Task<ActionResult<IPagedResult<PointOfSaleAuthorizedUser>>> BrowseAuthorizedUsers(Guid id, [FromQuery] BrowsePointOfSaleAuthorizedUsers query) =>
             Collection(await _pointsOfSaleService.BrowseAuthorizedUsers(id, query));
 
+        [Authorize]
         [HttpGet("{id}/authorizedUsers/{userId}")]
         [ProducesResponseType(200, Type = typeof(PointOfSaleAuthorizedUser))]
         [ProducesResponseType(404)]
