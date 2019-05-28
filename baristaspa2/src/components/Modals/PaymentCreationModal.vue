@@ -2,15 +2,19 @@
     <div>
         <b-modal :id="modalId" title="Create Payment" hide-footer>
             <b-form>
-                <b-form-group label="User">
-                    <UserSelector v-model="userId" label="User" v-bind:required="true" />
+                <b-form-group label="User (required)">
+                    <UserSelector v-model="userId" label="User" v-bind:required="true" @selection-changed="reloadBalance" />
                 </b-form-group>
 
-                <b-form-group label="Amount">
+                <b-form-group label="User Balance" label-for="balance">
+                    <b-form-input readonly v-bind:value="balance" />
+                </b-form-group>
+
+                <b-form-group label="Amount (required)">
                     <b-form-input v-model="amount"/>
                 </b-form-group>          
 
-                <b-form-group label="Source">
+                <b-form-group label="Source (required)">
                     <b-form-input v-model="source" />
                 </b-form-group>
 
@@ -18,7 +22,7 @@
                     <b-form-input v-model="externalId" />
                 </b-form-group>
 
-                <b-button type="submit" @click="createPayment" v-bind:disabled="!userId">Create Payment</b-button>
+                <b-button type="submit" @click="createPayment" v-bind:disabled="!userId || !source">Create Payment</b-button>
             </b-form>
         </b-modal>
     </div>
@@ -35,6 +39,8 @@ export default {
     },
     data: function() {
         return {
+            balance: "n/a",
+
             amount: 0,
             userId: "",
             source: "",
@@ -52,6 +58,19 @@ export default {
                     c.$bvModal.hide(c.modalId);
                 })
                 .catch(c.$api.showError);
+        },
+
+        reloadBalance: function() {
+            var c = this;
+
+            if (!c.userId) {
+                c.balance = "n/a";
+                return;
+            }
+
+            c.$api.get("balance/" + c.userId)
+                .then(resp => c.balance = resp.data.value)
+                .catch(c.balance = "???");
         }
     }
 }

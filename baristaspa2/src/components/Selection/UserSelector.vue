@@ -88,6 +88,8 @@ export default {
                     .then(n => c.selectedName = n)
                     .catch(() => c.selectedName = "Unknown");
             }
+
+            this.$emit("selection-changed");
         },
         selectClicked() {
             this.$refs.modal.show();

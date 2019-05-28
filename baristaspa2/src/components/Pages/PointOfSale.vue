@@ -38,6 +38,7 @@ export default {
                 c.posData = response.data;
             });
         },
+
         posRenamed(id, displayName) {
             if (this.posId == id)
                 this.posData.displayName = displayName;

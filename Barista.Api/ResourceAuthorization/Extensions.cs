@@ -35,6 +35,9 @@ namespace Barista.Api.ResourceAuthorization
             if (resourceIds == null) throw new ArgumentNullException(nameof(resourceIds));
             if (policy == null) throw new ArgumentNullException(nameof(policy));
 
+            if (resourceIds is null)
+                return;
+
             var userId = user.GetUserId();
             var tasks = resourceIds.ToDictionary(
                 resId => resId, resourceId =>

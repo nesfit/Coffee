@@ -2,17 +2,19 @@
     <div v-if="posId">
       <b-tabs v-if="stockItemIdsLoaded">
         <b-tab title="Sale-based stock operations" active>
-            <PagedQuery @item-clicked="removeSaleBasedStockOp" v-bind:fields="saleBasedFields" endpoint="saleBasedStockOperations" v-bind:additionalQueryParams="queryParams" startingSortBy="created" startingSortDir="desc">
+            <PagedQuery v-if="anyStockItems" @item-clicked="removeSaleBasedStockOp" v-bind:fields="saleBasedFields" endpoint="saleBasedStockOperations" v-bind:additionalQueryParams="queryParams" startingSortBy="created" startingSortDir="desc">
                 <template slot="stockItemId" slot-scope="data">
                     <StockItemName v-if="data.item.stockItemId" v-bind:id="data.item.stockItemId" />
                 </template>
             </PagedQuery>
+
+            <div v-else>No stock items available at this point of sale.</div>
         </b-tab>
 
         <b-tab title="Manual stock operations">
             <b-button variant="success" v-b-modal.manualStockOpModal>Create manual stock operation</b-button>
 
-            <PagedQuery @item-clicked="removeManualStockOp" v-bind:fields="manualFields" endpoint="manualStockOperations" v-bind:additionalQueryParams="queryParams" startingSortBy="created" startingSortDir="desc">
+            <PagedQuery v-if="anyStockItems" @item-clicked="removeManualStockOp" v-bind:fields="manualFields" endpoint="manualStockOperations" v-bind:additionalQueryParams="queryParams" startingSortBy="created" startingSortDir="desc">
                 <template slot="stockItemId" slot-scope="data">
                     <StockItemName v-if="data.item.stockItemId" v-bind:id="data.item.stockItemId" />
                 </template>
@@ -21,6 +23,8 @@
                     <UserName v-if="data.item.createdByUserId" v-bind:id="data.item.createdByUserId" />
                 </template>
             </PagedQuery>
+
+            <div v-else>No stock items available at this point of sale.</div>
         </b-tab>
       </b-tabs>
 
@@ -40,6 +44,9 @@ export default {
   computed: {
     queryParams: function() {
       return {stockItemId: this.stockItemIds};
+    },
+    anyStockItems: function() {
+      return this.stockItemIds.length > 0;
     }
   },
   mounted() {
@@ -90,7 +97,7 @@ export default {
   data: function() {
     return {
       posId: null,
-      stockItemIds: {},
+      stockItemIds: [],
       stockItemIdsLoaded: false,
       selectedOffer: {},
       saleBasedFields: [

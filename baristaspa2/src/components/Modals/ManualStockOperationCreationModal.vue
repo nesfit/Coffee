@@ -2,7 +2,7 @@
     <div>
         <b-modal :id="modalId" title="New Manual Stock Operation" hide-footer>
             <b-form>
-                <StockItemSelector v-model="stockItemId" label="Stock Item" v-bind:required="true" />
+                <StockItemSelector v-bind:posId="posId" v-model="stockItemId" label="Stock Item" v-bind:required="true" />
 
                 <b-form-group label="Quantity">
                     <b-form-input v-model="quantity" required />

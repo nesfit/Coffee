@@ -68,6 +68,8 @@ export default {
     },
 
     loadPolicies: function(policyArray) {
+      this.$set(this, "policies", {});
+      
       for (var i = 0; i < policyArray.length; i++)
         this.$set(this.policies, policyArray[i], true);
     },
