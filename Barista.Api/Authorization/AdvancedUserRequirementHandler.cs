@@ -28,8 +28,10 @@ namespace Barista.Api.Authorization
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AdvancedUserRequirement requirement)
         {
-            if (context.User.HasAdministratorClaim())
+            if (context.User.HasAdministratorClaim()) {
                 context.Succeed(requirement); // TODO log elevation
+                return;
+            }
 
             var userId = context.User.GetUserId();
 

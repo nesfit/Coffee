@@ -143,8 +143,8 @@ export default {
           label: "Created By"
         },
         {
-          key: "reason",
-          label: "Reason"
+          key: "comment",
+          label: "Comment"
         }
       ]
     };
