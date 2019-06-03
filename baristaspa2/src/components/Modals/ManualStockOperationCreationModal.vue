@@ -2,19 +2,19 @@
     <div>
         <b-modal :id="modalId" title="New Manual Stock Operation" hide-footer>
             <b-form>
-                <b-form-group label="Stock Item">
+                <b-form-group label="Stock Item (required)">
                     <StockItemSelector v-bind:posId="posId" v-model="stockItemId" label="Stock Item" v-bind:required="true" />
                 </b-form-group>
 
-                <b-form-group label="Quantity">
+                <b-form-group label="Quantity (required)">
                     <b-form-input v-model="quantity" required />
                 </b-form-group>
 
-                <b-form-group label="Comment">
+                <b-form-group label="Comment (required)">
                     <b-form-input v-model="comment" required />
                 </b-form-group>
 
-                <b-button type="submit" @click="createStockItem" v-bind:disabled="!stockItemId">Create</b-button>
+                <b-button type="submit" @click="createStockItem" v-bind:disabled="!stockItemId || !comment">Create</b-button>
             </b-form>
         </b-modal>
     </div>

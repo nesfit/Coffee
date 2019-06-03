@@ -3,10 +3,10 @@
         <b-modal :id="modalId" title="New Stock Item" hide-footer>
             <b-form>
                 <b-form-group label="Display name">
-                    <b-form-input v-model="form.displayName" required />
+                    <b-form-input v-model="displayName" required />
                 </b-form-group>
 
-                <b-button type="submit" @click="createStockItem">Create</b-button>
+                <b-button type="submit" @click="createStockItem" v-bind:disabled="!displayName">Create</b-button>
             </b-form>
         </b-modal>
     </div>
@@ -21,10 +21,7 @@ export default {
     },
     data: function() {
         return {
-            form: {
-                displayName: "",
-                pointOfSaleId: ""
-            }
+            displayName: ""
         };
     },
     mounted() {
@@ -37,15 +34,14 @@ export default {
     },
     methods: {
         updateForm: function() {
-            this.form.displayName = "";
-            this.form.pointOfSaleId = this.posId;
+            this.displayName = "";
         },
 
         createStockItem: function(evt) {
             evt.preventDefault();
             var c = this;            
            
-            c.$api.post("stockItems", c.form)
+            c.$api.post("stockItems", { pointOfSaleId: c.posId, displayName: c.displayName })
                 .then(resp => {
                     c.$emit("stock-item-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);

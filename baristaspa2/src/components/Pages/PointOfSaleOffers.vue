@@ -56,15 +56,11 @@ export default {
           this.showOfferDetails(id);
       }
   },
-  computed: {
-    queryParams() {
-      return { atPointOfSaleId: this.posId };
-    }
-  },
   data: function() {
     return {
       posId: null,
       selectedOffer: {},
+      queryParams: {},
       fields: [
         {
           key: "productId",
@@ -96,6 +92,7 @@ export default {
   },
   mounted() {
     this.posId = this.$route.params.id;
+    this.queryParams = { atPointOfSaleId: this.posId };
   }
 }
 </script>
