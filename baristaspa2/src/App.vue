@@ -80,11 +80,13 @@ export default {
       c.$api.showError = function(error, title) {
         var errorMessage = "Error communicating with API: " + error.toString() + ".";
 
-        if (error.response && error.response.data)
-          errorMessage += "Code: " + error.response.data + ".";
+        if (error.response && error.response.data) {
+          if (error.response.data.message)
+            errorMessage += error.response.data.message;
 
-        if (error.response && error.response.message)
-          errorMessage += "Message: " + error.response.message + ".";
+          if (error.response.data.code)
+            errorMessage += "(error code: " + error.response.data.code + ")";          
+        }
 
         var options = {};
         if (title)
