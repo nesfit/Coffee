@@ -1,11 +1,11 @@
 <template>
     <div>
-        <b-form-input v-if="this.required" pattern="yyyy-mm-dd HH:mm" v-model="inputValue" @input="publishInputValue" :placeholder="placeholder" type="datetime-local" required />
+        <b-form-input v-if="this.required" v-model="inputValue" @input="publishInputValue" :placeholder="placeholder" type="datetime-local" required />
         
         <b-input-group v-else>
             <b-button v-if="!this.inputValue || this.inputValue.length == 0" variant="outline-success" @click="set">Set Value</b-button>
 
-            <b-form-input v-if="this.inputValue && this.inputValue.length > 0" pattern="yyyy-mm-dd HH:mm" v-model="inputValue" @input="publishInputValue" :placeholder="placeholder" type="datetime-local" />
+            <b-form-input v-if="this.inputValue && this.inputValue.length > 0" v-model="inputValue" @input="publishInputValue" :placeholder="placeholder" type="datetime-local" />
             <b-input-group-append v-if="this.inputValue && this.inputValue.length > 0">
                 <b-button variant="outline-danger" @click="unset">Unset Value</b-button>
             </b-input-group-append>
