@@ -22,6 +22,7 @@ namespace Barista.Identity.Repositories
             modelBuilder.Entity<AssignmentToUser>();
             modelBuilder.Entity<SpendingLimit>().HasOne<AssignmentToUser>().WithMany(a => a.SpendingLimits).IsRequired();
             modelBuilder.Entity<AuthenticationMeans>().HasIndex(m => m.Method);
+            modelBuilder.Entity<AuthenticationMeans>().HasIndex(m => new {m.Method, m.Value}).IsUnique();
             base.OnModelCreating(modelBuilder);
         }
 

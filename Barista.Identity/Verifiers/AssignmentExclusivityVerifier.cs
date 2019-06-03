@@ -40,7 +40,7 @@ namespace Barista.Identity.Verifiers
                             throw new BaristaException(
                                 "invalid_means_assignment_status",
 
-                                $"The means with ID '{meansId}' has inconsistent state of assignments. " +
+                                $"The means with ID '{meansId}' cannot have more than one active assignment. " +
                                 $"The assignment with ID '{currentlyValid.Id}' becomes permanently valid at '{currentlyValid.ValidSince}', " +
                                 $"and the next assignment with ID '{assignment.Id}' becomes valid at '{assignment.ValidSince}'."
                             );
@@ -49,7 +49,7 @@ namespace Barista.Identity.Verifiers
                             throw new BaristaException(
                                 "invalid_means_assignment_status",
 
-                                $"The means with ID '{meansId}' has inconsistent state of assignments. " +
+                                $"The means with ID '{meansId}' cannot have more than one active assignment. " +
                                 $"The assignment with ID '{currentlyValid.Id}' is valid from '{currentlyValid.ValidSince}' until '{currentlyValid.ValidUntil}'" +
                                 $"and the next assignment with ID '{assignment.Id}' becomes valid at '{assignment.ValidSince}'."
                             );

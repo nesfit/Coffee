@@ -18,6 +18,7 @@ namespace Barista.Consistency.Handlers
         public async Task HandleAsync(IDatabaseCreated @event, ICorrelationContext correlationContext)
         {
             await _factory.Create()
+                .Add<RepeatFailedInitializationActivity>()
                 .Add<CreateUserActivity>()
                 .Add<CreatePasswordActivity>()
                 .Add<AssignPasswordActivity>()

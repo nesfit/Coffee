@@ -11,7 +11,7 @@
                 </b-form-group>
 
                 <b-form-group label="Stock Item">
-                    <StockItemSelector label="Stock Item" v-model="stockItemId" v-bind:required="false" />
+                    <StockItemSelector label="Stock Item" v-bind:posId="posId" v-model="stockItemId" v-bind:required="false" />
                 </b-form-group>
                 
                 <!-- todo datetimeinput -->

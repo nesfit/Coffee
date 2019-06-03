@@ -56,10 +56,14 @@ export default {
           this.showOfferDetails(id);
       }
   },
+  computed: {
+    queryParams() {
+      return { atPointOfSaleId: this.posId };
+    }
+  },
   data: function() {
     return {
       posId: null,
-      queryParams: {atPointOfSaleId: this.posId},
       selectedOffer: {},
       fields: [
         {
