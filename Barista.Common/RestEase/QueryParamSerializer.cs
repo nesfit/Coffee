@@ -59,7 +59,7 @@ namespace Barista.Common.RestEase
             if (obj is IEnumerable collection)
             {
                 foreach (var item in collection)
-                foreach (var subItem in GetPropertiesDeepRecursive(item, $"{name}[]"))
+                foreach (var subItem in GetPropertiesDeepRecursive(item, $"{name}")) // TODO: use the ?prop[]=x&prop[]=y format once the connected binding issues are figured out
                     yield return subItem;
 
                 yield break;

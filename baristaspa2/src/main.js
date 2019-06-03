@@ -5,6 +5,7 @@ import 'mutationobserver-shim'
 import VueRouter from 'vue-router'
 import './plugins/bootstrap-vue'
 import axios from 'axios'
+import Qs from 'qs'
 
 import Home from '@/components/Pages/Home.vue'
 import Users from '@/components/Pages/Users.vue'
@@ -103,7 +104,10 @@ var loadConfiguredBaseUrl = function() {
       var axiosInstance = axios.create({
         responseType: "json",
         withCredentials: true,
-        baseURL: resp.data.api_address
+        baseURL: resp.data.api_address,
+        paramsSerializer: function (params) {
+          return Qs.stringify(params, {arrayFormat: 'repeat'})
+        }
       });
 
       Vue.prototype.$api = axiosInstance;

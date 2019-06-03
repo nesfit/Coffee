@@ -44,12 +44,12 @@ namespace Barista.Common.AspNetCore
                 {
                     if (!supportedQueryParameters.TryGetValue(requestQueryParamName, out var isArrayParameter))
                     {
-                        if (requestQueryParamName.EndsWith("[]") && requestQueryParamName.Length > 2)
+                        /*if (requestQueryParamName.EndsWith("[]") && requestQueryParamName.Length > 2) TODO: binding does not work for this format
                         {
                             var withoutBrackets = requestQueryParamName.Substring(0, requestQueryParamName.Length - 2);
                             if (supportedQueryParameters.TryGetValue(withoutBrackets, out isArrayParameter) && isArrayParameter)
                                 continue;
-                        }
+                        }*/
 
                         context.ModelState.AddModelError(requestQueryParamName, "The query parameter is not supported by this endpoint.");
                         continue;
