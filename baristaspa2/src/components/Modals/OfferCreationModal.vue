@@ -14,13 +14,12 @@
                     <StockItemSelector label="Stock Item" v-bind:posId="posId" v-model="stockItemId" v-bind:required="false" />
                 </b-form-group>
                 
-                <!-- todo datetimeinput -->
                 <b-form-group label="Valid Since">
-                    <b-form-input type="datetime-local" v-model="validSince" required />
+                    <DateTimeInput v-model="validSince" v-bind:required="true" />
                 </b-form-group>
 
                 <b-form-group label="Valid Until">
-                    <b-form-input type="datetime-local" v-model="validUntil" />
+                    <DateTimeInput v-model="validUntil" v-bind:required="false" />
                 </b-form-group>
 
                 <b-button type="submit" @click="createOffer" v-bind:disabled="!canSubmit">Create Offer</b-button>
@@ -32,26 +31,11 @@
 <script>
 import ProductSelector from "@/components/Selection/ProductSelector.vue";
 import StockItemSelector from "@/components/Selection/StockItemSelector.vue";
-
-function toDatetimeLocal(date) {    
-    var ten = function (i) {
-        return (i < 10 ? '0' : '') + i;
-    };
-
-    var year = date.getFullYear();
-    var month = ten(date.getMonth() + 1);
-    var day = ten(date.getDate());
-
-    var hrs = ten(date.getHours());
-    var mins = ten(date.getMinutes());
-    var secs = ten(date.getSeconds());
-    
-    return year + '-' + month + '-' + day + 'T' + hrs + ':' + mins + ':' + secs;
-}
+import DateTimeInput from "@/components/DateTimeInput.vue"
 
 export default {
     name: 'OfferCreationModal',
-    components: {ProductSelector,StockItemSelector},
+    components: {ProductSelector,StockItemSelector,DateTimeInput},
     props: {
         modalId: String,
         posId: String
@@ -60,9 +44,8 @@ export default {
         return {
             productId: "",
             recommendedPrice: "",
-            pointOfSaleId: "",
             stockItemId: "",
-            validSince: toDatetimeLocal(new Date()),
+            validSince: new Date().toString(),
             validUntil: ""
         };
     },
@@ -76,11 +59,10 @@ export default {
     },
     methods: {
         updateForm: function() {
-            this.pointOfSaleId = this.posId;
             this.productId = "";
             this.recommendedPrice = "";
             this.stockItemId = "";
-            this.validSince = toDatetimeLocal(new Date());
+            this.validSince = new Date().toString();
             this.validUntil = "";
         },
         
@@ -98,10 +80,10 @@ export default {
             var formData = {
                 productId: c.productId,
                 recommendedPrice: c.recommendedPrice,
-                pointOfSaleId: c.pointOfSaleId,
                 stockItemId: c.stockItemId,
                 validSince: c.validSince,
-                validUntil: c.validUntil
+                validUntil: c.validUntil,
+                pointOfSaleId: c.posId
             };
 
             c.$api.post("offers", formData)
