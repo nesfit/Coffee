@@ -45,7 +45,7 @@ export default {
             productId: "",
             recommendedPrice: "",
             stockItemId: "",
-            validSince: new Date().toString(),
+            validSince: new Date().toISOString(),
             validUntil: ""
         };
     },
@@ -62,7 +62,7 @@ export default {
             this.productId = "";
             this.recommendedPrice = "";
             this.stockItemId = "";
-            this.validSince = new Date().toString();
+            this.validSince = new Date().toISOString();
             this.validUntil = "";
         },
         
