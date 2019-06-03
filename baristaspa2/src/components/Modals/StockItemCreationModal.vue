@@ -46,7 +46,7 @@ export default {
                     c.$emit("stock-item-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Stock item creation failed"));
+                .catch(e => c.$api.showError(e, "Stock item creation failed"));
         }
     }
 }

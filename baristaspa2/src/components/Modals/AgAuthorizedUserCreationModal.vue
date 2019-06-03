@@ -43,7 +43,7 @@ export default {
                     c.$emit("user-authorized", c.userId);
                     c.$bvModal.hide(c.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("User authorization failed"));
+                .catch(e => c.$api.showError(e, "User authorization failed"));
         }
     }
 }

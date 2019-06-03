@@ -105,8 +105,8 @@ export default {
             c.assignmentDetails.loading = false;
           }          
         })
-        .catch(() => {
-          c.$bvModal.msgBoxOk('Card lookup failed');
+        .catch(e => {
+          c.$api.showError(e, "Card lookup failed");
           c.assignmentDetails.loading = false;
         });
     },
@@ -124,8 +124,8 @@ export default {
 
           c.assignmentDetails.loading = false;         
         })
-        .catch(() => {
-           c.$bvModal.msgBoxOk("Card assignment lookup failed");
+        .catch(e => {
+           c.$api.showError(e, "Card assignment lookup failed");
            c.assignmentDetails.loading = false;
         });
     },
@@ -139,9 +139,7 @@ export default {
           c.$bvModal.hide("assignmentDetails");  
           c.$bvModal.msgBoxOk("Card was unassigned successfully");
         })
-        .catch(() => {
-           c.$bvModal.msgBoxOk("Card unassignment failed");
-        });
+        .catch(e => c.$api.showError(e, "Card unassignment failed"));
     },
 
     assignCardToUser(evt) {
@@ -159,9 +157,11 @@ export default {
               value: c.toUserSerialNo
             }).then(meansResp => {
               c.assignMeansToUser(meansResp.data.id, c.toUserId);
-            }); 
+            })
+            .catch(e => c.$api.showError(e, "Means creation failed"));
           }
-        });
+        })
+        .catch(e => c.$api.showError(e, "Means lookup failed"));
     },
 
     assignMeansToUser(meansId, userId) {
@@ -169,7 +169,7 @@ export default {
 
       c.$api.post("assignmentsToUser", { meansId: meansId, userId: userId, isShared: false })
         .then(() => c.$bvModal.msgBoxOk("Card was assigned successfully"))
-        .catch(() => c.$bvModal.msgBoxOk("Card assignment failed"));
+        .catch(e => c.$api.showError(e, "Card assignment failed"));
     },
     
     revokeCardsOfUser(evt) {
@@ -208,9 +208,9 @@ export default {
                           if ((c.revokedCount + failedCount) == c.revokedTotal)
                             c.revocationInProgress = false;
                         })
-                        .catch(() => {
+                        .catch(e => {
                           failedCount++;
-                          c.$bvModal.msgBoxOk('Could not revoke card with assignment ID ' + ass.id);
+                          c.$api.showError(e, 'Could not revoke card with assignment ID ' + ass.id);
                           if ((c.revokedCount + failedCount) == c.revokedTotal)
                             c.revocationInProgress = false;
                         });
@@ -219,9 +219,9 @@ export default {
               }                
             }
           }
-        }).catch(() => {
+        }).catch(er => {
           c.revocationInProgress = false;
-          c.$bvModal.msgBoxOk('Could not generate revocation list');
+          c.$api.showError(er, 'Could not generate revocation list');
         });
     }
   }

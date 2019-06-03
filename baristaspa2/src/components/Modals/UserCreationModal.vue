@@ -50,7 +50,7 @@ export default {
                     c.$refs.modal.hide();
                     c.$emit("user-created", resp.data.id);                    
                 })
-                .catch(c.$api.showError)
+                .catch(e => c.$api.showError(e, "User creation failed"))
                 .then(() => this.isCreating = false);
         },
 

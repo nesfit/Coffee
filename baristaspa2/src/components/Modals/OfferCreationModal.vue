@@ -92,7 +92,7 @@ export default {
                     c.$bvModal.hide(c.modalId);
                     c.updateForm();
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Offer creation failed"));
+                .catch(e => c.$api.showError(e, "Offer creation failed"));
         }
     }
 }

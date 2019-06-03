@@ -73,9 +73,9 @@ export default {
                     c.isSaving = false;
                     c.$eventHub.$emit('pos-renamed', c.posId, c.displayName);
                 })
-                .catch(() => {
+                .catch(err => {
                     c.isSaving = false;
-                    c.$bvModal.msgBoxOk("Point of sale update failed");
+                    c.$api.showError(err, "POS editation failed");
                 });
         },
 
@@ -91,7 +91,7 @@ export default {
                         c.$bvModal.msgBoxOk("Point of sale deleted.")
                         .then(() => c.$router.push('/pointsOfSale'));
                     })
-                    .catch(() => c.$bvModal.msgBoxOk("Point of sale deletion failed."));
+                    .catch(e => c.$api.showError(e, "POS deletion failed"));
                 });
         }
     }

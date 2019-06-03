@@ -110,7 +110,7 @@ export default {
                 if (!val) return;
                     c.$api.delete("users/" + this.id)
                     .then(() => c.$router.push("/users"))
-                    .catch(c.$api.showError);
+                    .catch(e => c.$api.showError(e, "User deletion failed"))
             });
         },
 
@@ -125,7 +125,7 @@ export default {
                 c.$refs.passwordModal.hide();
                 c.newPasswordToAssign = "";
             })
-            .catch(c.$api.showError)
+            .catch(e => c.$api.showError(e, "Password override failed."))
             .then(() => c.isSettingPassword = false);
         }
     }

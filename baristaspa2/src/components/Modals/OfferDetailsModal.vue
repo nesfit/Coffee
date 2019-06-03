@@ -88,7 +88,7 @@ export default {
                     c.$bvModal.msgBoxOk("Offer deleted");
                     c.$bvModal.hide(c.values.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Offer deletion failed"));
+                .catch(e => c.$api.showError(e, "Offer deletion failed"));
         },
 
         editOffer: function(evt) {
@@ -116,7 +116,7 @@ export default {
 
             c.$api.put("offers/" + offer, formData)
                 .then(() => c.$bvModal.msgBoxOk("Offer updated"))
-                .catch(() => c.$bvModal.msgBoxOk("Offer failed to update"));
+                .catch(e => c.$api.showError(e, "Offer editation failed"));
         }
     }
 }

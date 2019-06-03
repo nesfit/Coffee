@@ -61,7 +61,7 @@ export default {
                     c.$bvModal.msgBoxOk("Stock item deleted");
                     c.$bvModal.hide(c.values.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Stock item deletion failed"));
+                .catch(e => c.$api.showError(e, "Stock item deletion failed"));
         },
 
         editStockItem: function(evt) {
@@ -71,7 +71,7 @@ export default {
 
             c.$api.put("stockItems/" + stockItem, c.form)
                 .then(() => c.$bvModal.msgBoxOk("Stock item updated"))
-                .catch(() => c.$bvModal.msgBoxOk("Stock item failed to update"));
+                .catch(e => c.$api.showError(e, "Stock item editation failed"));
         }
     }
 }

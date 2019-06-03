@@ -64,7 +64,7 @@ export default {
                     c.$bvModal.msgBoxOk("User authorization revoked");
                     c.$bvModal.hide(this.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("User authorization revocation failed"));
+                .catch(e => c.$api.showError(e, "User authorization revocation failed"));
         }
     }
 }

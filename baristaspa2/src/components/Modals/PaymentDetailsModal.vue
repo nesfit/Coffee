@@ -90,7 +90,7 @@ export default {
                     c.$bvModal.msgBoxOk("Payment deleted");
                     c.$bvModal.hide(c.values.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Payment deletion failed"));
+                .catch(e => c.$api.showError(e, "Payment deletion failed"));
         },
 
         editPayment: function(evt) {
@@ -100,7 +100,7 @@ export default {
 
             c.$api.put("payments/" + payment, { amount: c.amount, userId: c.userId, source: c.source, externalId: c.externalId })
                 .then(() => c.$bvModal.msgBoxOk("Payment updated"))
-                .catch(() => c.$bvModal.msgBoxOk("Payment failed to update"));
+                .catch(e => c.$api.showError(e, "Payment editation failed"));
         }
     }
 }

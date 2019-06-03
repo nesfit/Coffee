@@ -77,7 +77,7 @@ export default {
     apiReady: function() {
       var c = this;
 
-      c.$api.showError = function(error) {
+      c.$api.showError = function(error, title) {
         var errorMessage = "Error communicating with API: " + error.toString() + ".";
 
         if (error.response && error.response.data)
@@ -86,7 +86,11 @@ export default {
         if (error.response && error.response.message)
           errorMessage += "Message: " + error.response.message + ".";
 
-        c.$bvModal.msgBoxOk(errorMessage);
+        var options = {};
+        if (title)
+          options.title = title;
+
+        c.$bvModal.msgBoxOk(errorMessage, options);
       };
 
       c.$api.get("policies/me")

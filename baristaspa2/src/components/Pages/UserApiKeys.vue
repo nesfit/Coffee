@@ -31,7 +31,7 @@ export default {
           if (!val) return;
           c.$api.delete("users/" + c.userId + "/apiKeys/" + item.id)
             .then(() => c.$refs.pagedQuery.reload())
-            .catch(c.$api.showError)
+            .catch(e => c.$api.showError(e, "API key deletion failed"))
         });
     }
   },

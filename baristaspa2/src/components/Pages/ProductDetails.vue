@@ -48,21 +48,21 @@ export default {
             c.isEditing = true;
 
             c.$api.put("products/" + c.id, formData)
-            .catch(c.$api.showError)
+            .catch(e => c.$api.showError(e, "Product editation failed"))
             .then(() => c.isEditing = false);
         },
 
         deleteProduct: function() {
             var c = this;
 
-            this.$bvModal.msgBoxConfirm("Are you sure you want to delete user " + this.userToEdit.emailAddress + "?")
+            this.$bvModal.msgBoxConfirm("Are you sure you want to delete product " + this.displayName + "?")
             .then(val => {
                 if (!val) return;
 
                 c.isDeleting = true;
                 c.$api.delete("products/" + c.id)
-                    .then(() => c.$router.push("/products")) 
-                    .catch(c.$api.showError)
+                    .then(() => c.$router.push("/products"))
+                    .catch(e => c.$api.showError(e, "Product failed to remove"))
                     .then(() => c.isDeleting = false);
             });
         }

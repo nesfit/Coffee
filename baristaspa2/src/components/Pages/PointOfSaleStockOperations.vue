@@ -78,7 +78,7 @@ export default {
           if (!val) return;
           c.$api.delete("saleBasedStockOperations/" + item.id)
             .then(() => c.$bvModal.msgBoxOk("Sale-based stock operation removed."))
-            .catch(() => c.$bvModal.msgBoxOk("Sale-based stock operation failed to remove."))
+            .catch(e => c.$api.showError(e, "Sale-based stock operation failed to remove."))
         });
     },
 
@@ -90,7 +90,7 @@ export default {
           if (!val) return;
           c.$api.delete("manualStockOperations/" + item.id)
             .then(() => c.$bvModal.msgBoxOk("Manual stock operation removed."))
-            .catch(() => c.$bvModal.msgBoxOk("Manual stock operation failed to remove."))
+            .catch(e => c.$api.showError(e, "Manual stock operation failed to remove."))
         });
     }
   },

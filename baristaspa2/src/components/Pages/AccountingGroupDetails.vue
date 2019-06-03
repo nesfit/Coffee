@@ -53,7 +53,7 @@ export default {
                     c.isSaving = false;
                     this.$eventHub.$emit('ag-renamed', c.agId, c.displayName);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Accounting group update failed"));
+                .catch(e => c.$api.showError(e, "Accounting group rename failed"));
         },
 
         deleteAccountingGroup: function(evt) {
@@ -68,7 +68,7 @@ export default {
                         c.$bvModal.msgBoxOk("Accounting group deleted.").
                         then(() => c.$router.push('/pointsOfSale'));
                     })
-                    .catch(() => c.$bvModal.msgBoxOk("Accounting group deletion failed."));
+                    .catch(e => c.$api.showError(e, "Accounting group deletion failed"));
                 });
         }
     }

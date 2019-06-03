@@ -86,7 +86,7 @@ export default {
       var c = this;
       c.$api.post(path, args)
         .then(() => c.$bvModal.msgBoxOk("The API accepted the request to relay the command."))
-        .catch(() => c.$bvModal.msgBoxOk("The API rejected to request to relay the command."));
+        .catch(e => c.$api.showError(e, "The API rejected to request to relay the command."));
     }
   },
   data: function() {

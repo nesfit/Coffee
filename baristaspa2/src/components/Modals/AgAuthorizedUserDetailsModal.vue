@@ -52,7 +52,7 @@ export default {
 
             c.$api.put("accountingGroups/" + c.agId + "/authorizedUsers/" + c.userId, c.form)
                 .then(() => c.$bvModal.msgBoxOk("User authorization updated"))
-                .catch(() => c.$bvModal.msgBoxOk("User authorization failed"));
+                .catch(e => c.$api.showError(e, "User authorization editation failed"));
         },
 
         revokeAuthorization: function(evt) {
@@ -64,7 +64,7 @@ export default {
                     c.$bvModal.msgBoxOk("User authorization revoked");
                     c.$bvModal.hide(this.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("User authorization revocation failed"));
+                .catch(e => c.$api.showError(e, "User authorization revocation failed"));
         }
     }
 }

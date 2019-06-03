@@ -69,7 +69,7 @@ export default {
 
                     checkIfExistsPeriodically();
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Accounting group creation failed"));
+                .catch(e => c.$api.showError(e, "Accounting group creation failed"));
         }
     }
 }

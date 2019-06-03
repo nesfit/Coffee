@@ -57,7 +57,7 @@ export default {
                     c.$emit("payment-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);
                 })
-                .catch(c.$api.showError);
+                .catch(e => c.$api.showError(e, "Payment creation failed"));
         },
 
         reloadBalance: function() {

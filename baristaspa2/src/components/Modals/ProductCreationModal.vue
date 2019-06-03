@@ -32,7 +32,7 @@ export default {
             c.$api.post("products", formData)
                 .then(resp => c.$router.push("products/" + resp.data.id))
                 .catch(err => {
-                    c.$api.showError(err);
+                    c.$api.showError(err, "Product creation failed");
                     c.isCreating = false;
                 });
         }

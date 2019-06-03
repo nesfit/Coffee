@@ -87,7 +87,7 @@ export default {
 
                     checkIfExistsPeriodically();
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Point of sale creation failed"));
+                .catch(e => c.$api.showError(e, "Point of sale creation failed"));
         }
     }
 }

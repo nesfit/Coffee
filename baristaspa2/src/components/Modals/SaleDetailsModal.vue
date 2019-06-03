@@ -78,7 +78,7 @@ export default {
 
             c.$api.post("sales/" + saleId + "/cancel", { reason: this.cancelReason })
                 .then(() => c.state = "Cancelled")
-                .catch(() => c.$bvModal.msgBoxOk("Sale cancellation failed"));
+                .catch(e => c.$api.showError(e, "Sale cancellation failed"));
         }
     }
 }

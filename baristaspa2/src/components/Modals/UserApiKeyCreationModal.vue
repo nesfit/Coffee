@@ -56,7 +56,7 @@ export default {
                     c.keyCreated = true;
                     c.$emit("api-key-created");
                 })
-                .catch(err => c.$api.showError(err))
+                .catch(e => c.$api.showError(e, "User API key creation failed"))
                 .then(() => c.isCreating = false);
         }
     }

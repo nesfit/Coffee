@@ -60,7 +60,7 @@ export default {
                     c.$emit("stock-operation-created", resp.data.id);
                     c.$bvModal.hide(c.modalId);
                 })
-                .catch(() => c.$bvModal.msgBoxOk("Stock operation creation failed"));
+                .catch(e => c.$api.showError(e, "Manual stock operation creation failed"));
         }
     }
 }
