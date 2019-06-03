@@ -2,7 +2,7 @@
     <div>
         <b-button variant="success" v-b-modal.posOfferCreation>Add New</b-button>
 
-        <PagedQuery v-bind:fields="fields" endpoint="offers" v-bind:additionalQueryParams="queryParams" @item-clicked="offerClicked">
+        <PagedQuery v-if="posId" v-bind:fields="fields" endpoint="offers" v-bind:additionalQueryParams="queryParams" @item-clicked="offerClicked">
             <template slot="productId" slot-scope="data">
                 <ProductName v-bind:id="data.item.productId" />
             </template>
@@ -91,8 +91,9 @@ export default {
     };
   },
   mounted() {
-    this.posId = this.$route.params.id;
-    this.queryParams = { atPointOfSaleId: this.posId };
+    var posId = this.$route.params.id;
+    this.queryParams = { atPointOfSaleId: posId };
+    this.posId = posId;
   }
 }
 </script>
